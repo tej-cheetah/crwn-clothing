@@ -4,7 +4,7 @@ import HomePage from './page/homepage/homepage.component'
 import ShopPage from './page/shop/shop.component'
 import Header from './components/header/header.component'
 import SignInSignUp from './page/sign-in-sign-up/sign-in-sign-up.component'
-import { auth, createUserProfileDocumet } from './firebase/firebase.utils'
+import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 import './App.css';
 
 class App extends React.Component {
@@ -22,7 +22,7 @@ class App extends React.Component {
     this.unSubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       // this.setState({currentUser: user})
       if(userAuth) {
-        const userRef = await createUserProfileDocumet(userAuth)
+        const userRef = await createUserProfileDocument(userAuth)
         userRef.onSnapshot(snapshot => {
           this.setState({
             currentUser: {
@@ -30,6 +30,7 @@ class App extends React.Component {
               ...snapshot.data()
             }
           })
+          console.log(this.state, " is this state changing")
         })
       } else {
         this.setState({currentUser: userAuth})
